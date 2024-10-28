@@ -1,0 +1,13 @@
+# Sample Document Title
+
+This document serves as an example for demonstrating how to use LangChain with OpenAI to embed documents and answer questions.
+
+## Main Topics Covered
+
+1. **Embedding Documents**: This section explains how to embed entire documents using OpenAI's embedding model.
+2. **Reusing Embeddings**: Discusses strategies for reusing embeddings to efficiently answer questions without reprocessing the entire document.
+3. **Performance Optimization**: Outlines techniques to optimize performance and reduce costs when using APIs for embedding.
+
+## Conclusion
+
+By following the instructions in this document, users can effectively leverage embeddings to create applications that understand and process natural language queries.

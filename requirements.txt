@@ -1,0 +1,15 @@
+uuid
+redis
+Flask
+openpyxl
+langchain
+Flask-CORS
+python-docx
+Flask[async]
+scikit-learn
+python-dotenv
+langchain_core
+langchain-openai
+langchain-pinecone
+pinecone-notebooks
+langchain-community
