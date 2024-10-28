@@ -6,10 +6,11 @@
     "HNSW",
     "langchain",
     "llms",
+    "myenv",
     "nlist",
-    "pymongo",
     "ollama",
     "pdfs",
+    "pymongo",
     "quantizer",
     "vectorstores"
   ]
