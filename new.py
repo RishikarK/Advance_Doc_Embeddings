@@ -57,7 +57,7 @@ chat_history_collection = db["ksm_chat_history"]
 # Redis setup
 cache = StrictRedis(host=redis_host, port=redis_port, db=0)
 
-retrieval_chain = None
+RETRIEVAL_CHAIN = None
 prompt_template = PromptTemplate.from_template(
     """
 You are a helpful assistant. Answer the following question based on the provided documents
@@ -297,14 +297,14 @@ async def chat():
         return jsonify({"error": "Failed to create or load vector store."}), 500
 
     prompt = prompt_template.format(user_question=user_question)
-    global retrieval_chain  # pylint: disable= W0603
-    if retrieval_chain is None:
-        retrieval_chain = create_retrieval_chain_with_ollama(vectorstore)
+    global RETRIEVAL_CHAIN  # pylint: disable= W0603
+    if RETRIEVAL_CHAIN is None:
+        RETRIEVAL_CHAIN = create_retrieval_chain_with_ollama(vectorstore)
         print("Creating a new retrieval chain.")
     else:
         print("Using an existing retrieval chain.")
 
-    response = retrieval_chain.invoke({"question": prompt})
+    response = RETRIEVAL_CHAIN.invoke({"question": prompt})
     answer = response.get("answer", "Sorry, I couldn't find an answer.")
 
     # Ensure chat_history_collection is not None
