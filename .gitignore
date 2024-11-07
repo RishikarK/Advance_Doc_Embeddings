@@ -8,6 +8,7 @@ __pycache__/
 
 myenv
 pdfs
+pdfss
 # Distribution / packaging
 .Python
 build/

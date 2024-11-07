@@ -106,7 +106,7 @@ memory = ConversationBufferMemory(memory_key="chat_history", return_messages=Tru
 # MongoDB setup
 client = MongoClient(mongo_uri)
 db = client["Embeddings"]
-collection = db["ksm_quant_embeddings"]
+collection = db["ksm_quant_all_embeddings"]
 chat_history_collection = db["ksm_chat_history"]
 
 # Redis setup
@@ -126,18 +126,32 @@ Question: {user_question}
 def extract_text_from_files(file_paths):
     """Function to extract text from PDF files."""
     text_contents = []
+    total_files = len(file_paths)
+    successful_files = 0
+    failed_files = 0
+
     for file_path in file_paths:
-        with open(file_path, "rb") as file:
-            pdf_reader = PdfReader(file)
-            for page in pdf_reader.pages:
-                text = page.extract_text()
-                if text:
-                    text_contents.append(text)
+        try:
+            with open(file_path, "rb") as file:
+                pdf_reader = PdfReader(file)
+                for page in pdf_reader.pages:
+                    text = page.extract_text()
+                    if text:
+                        text_contents.append(text)
+                successful_files += 1  # Increment if file is processed successfully
+        except EOFError as e:
+            print(f"Error reading {file_path}: {e}. Skipping file.")
+            failed_files += 1  # Increment if file processing failed
+
+    print(f"Total PDFs: {total_files}")
+    print(f"Successfully processed: {successful_files}")
+    print(f"Failed to process: {failed_files}")
+
     return text_contents
 
 
 # Function to split text into chunks
-def split_text_into_chunks(text, chunk_size=1000, chunk_overlap=200):
+def split_text_into_chunks(text, chunk_size=1500, chunk_overlap=200):
     """Split text into chunks for embedding."""
     text_splitter = CharacterTextSplitter(
         separator="\n",
